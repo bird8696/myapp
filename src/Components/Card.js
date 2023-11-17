@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import EditTask from '../modals/EditTask'
+import SearchTask from '../modals/SearchTask';
 
 const Card = ({taskObj, index, deleteTask, updateListArray}) => {
     const [modal, setModal] = useState(false);
+    const [searchModal, setSearchModal] = useState(false);
 
     const colors = [
         {
@@ -31,6 +33,10 @@ const Card = ({taskObj, index, deleteTask, updateListArray}) => {
         setModal(!modal);
     }
 
+    const handleSearch = () => {
+        setSearchModal(true);
+    };
+
     const updateTask = (obj) => {
         updateListArray(obj, index)
     }
@@ -47,11 +53,13 @@ const Card = ({taskObj, index, deleteTask, updateListArray}) => {
                 <p className = "mt-3" style={{"display":"inline-block", "max-Width":"100px", "overflow":"hidden", "white-space":"nowrap", "text-overflow":"ellipais"}}>{taskObj.Description}</p>
 
                 <div style={{"position": "absolute", "right" : "20px", "bottom" : "20px"}}>
-                    <i class = "far fa-edit mr-3" style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {() => setModal(true)}></i>
+                    <i class = "fa-brands fa-searchengin mr-3" style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleSearch}></i>
+                    <i class = "far fa-edit mr-3" style={{"color" : colors[index%5].primaryColor, "cursor" : "pointer", "padding" : "10px"}} onClick = {() => setModal(true)}></i>
                     <i class="fas fa-trash-alt" style = {{"color" : colors[index%5].primaryColor, "cursor" : "pointer"}} onClick = {handleDelete}></i>
                 </div>
         </div>
         <EditTask modal = {modal} toggle = {toggle} updateTask = {updateTask} taskObj = {taskObj}/>
+        <SearchTask modal={searchModal} toggle={() => setSearchModal(!searchModal)} taskObj={taskObj} />
         </div>
     );
 };
